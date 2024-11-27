@@ -1,7 +1,7 @@
 name: reqs_app_backend
 description: A starting point for Dart libraries or applications.
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/xeland314/reqs_app_lib.git
 
 environment:
   sdk: ^3.5.4
