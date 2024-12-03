@@ -1,7 +1,6 @@
 import 'package:reqs_app_backend/src/extensions/task.dart';
 import 'package:reqs_app_backend/src/models/task_table.dart';
 import 'package:reqs_app_backend/src/models/time.dart';
-import 'package:reqs_app_backend/src/models/time_unit.dart';
 
 /// Extension methods for calculating total partial and final times in a TaskTable.
 extension TaskTableTimeCalculations on TaskTable {

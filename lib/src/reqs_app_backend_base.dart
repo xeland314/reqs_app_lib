@@ -3,7 +3,6 @@ export 'models/time.dart';
 export 'models/consideration.dart';
 export 'models/risk.dart';
 export 'models/task_table.dart';
-export 'models/time_unit.dart';
 export 'models/module.dart';
 export 'extensions/task.dart';
 export 'extensions/task_table.dart';

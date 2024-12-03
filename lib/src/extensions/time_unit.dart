@@ -1,4 +1,4 @@
-import 'package:reqs_app_backend/src/models/time_unit.dart';
+import 'package:reqs_app_backend/src/models/time.dart';
 
 extension TimeUnitExtension on TimeUnit {
   String get name {

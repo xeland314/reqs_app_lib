@@ -1,9 +1,15 @@
 import 'package:decimal/decimal.dart';
 import 'package:rational/rational.dart';
-import 'package:reqs_app_backend/src/models/time_unit.dart';
+
+enum TimeUnit {
+  minutes,
+  hours,
+  days,
+  weeks,
+}
 
 /// Represents a time duration with a value and a unit.
-class Time {
+class Time implements Comparable<Time> {
   Decimal value;
   TimeUnit unit;
 
@@ -91,5 +97,10 @@ class Time {
   @override
   String toString() {
     return '${value.toStringAsFixed(2)} ${unit.name}';
+  }
+
+  @override
+  int compareTo(Time other) {
+    return toMinutes().compareTo(other.toMinutes());
   }
 }

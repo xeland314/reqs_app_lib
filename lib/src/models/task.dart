@@ -1,36 +1,32 @@
 import 'package:reqs_app_backend/src/extensions/task.dart';
+import 'package:reqs_app_backend/src/mixins/descriptible.dart';
+import 'package:reqs_app_backend/src/mixins/indexable.dart';
+import 'package:reqs_app_backend/src/interfaces/jsonable.dart';
+import 'package:reqs_app_backend/src/mixins/orderable.dart';
+import 'package:reqs_app_backend/src/mixins/timestampable.dart';
 import 'package:reqs_app_backend/src/models/consideration.dart';
 import 'package:reqs_app_backend/src/models/time.dart';
-import 'package:uuid/uuid.dart';
 
 /// Represents a task with optimistic, probable, and pessimistic time estimates.
-class Task {
-  String id;
-  String name;
-  String description;
+class Task
+    with Indexable, Descriptible, Orderable, Timestampable
+    implements Jsonable {
   Time optimisticTime;
   Time probableTime;
   Time pessimisticTime;
   List<Consideration> considerations;
-  int _order;
 
   Task({
-    required this.name,
-    required this.description,
+    required name,
+    required description,
     required this.optimisticTime,
     required this.probableTime,
     required this.pessimisticTime,
     required this.considerations,
-  })  : id = Uuid().v4(), // Generate a unique UUID for each task
-        _order = 0; // Default order value
-
-  /// Sets the order of the task.
-  void setOrder(int order) {
-    _order = order;
+  }) {
+    setName(name);
+    setDescription(description);
   }
-
-  /// Gets the order of the task.
-  int get order => _order;
 
   @override
   bool operator ==(Object other) {
@@ -43,6 +39,7 @@ class Task {
   int get hashCode => id.hashCode;
 
   /// Converts the task to a JSON map.
+  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -53,7 +50,7 @@ class Task {
       'pessimisticTime': pessimisticTime.toString(),
       'tpe': calculatePartialEstimatedTime().toString(),
       'considerations': considerations.map((c) => c.toJson()).toList(),
-      'order': _order,
+      'order': order,
     };
   }
 
@@ -61,7 +58,7 @@ class Task {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'order': _order,
+      'order': order,
       'name': name,
       'description': description,
       'optimisticTime': optimisticTime.toString(),
@@ -74,6 +71,6 @@ class Task {
 
   @override
   String toString() {
-    return 'Task{id: $id, name: $name, description: $description, optimisticTime: $optimisticTime, probableTime: $probableTime, pessimisticTime: $pessimisticTime, considerations: $considerations, order: $_order}';
+    return 'Task{id: $id, name: $name, description: $description, optimisticTime: $optimisticTime, probableTime: $probableTime, pessimisticTime: $pessimisticTime, considerations: $considerations, order: $order}';
   }
 }

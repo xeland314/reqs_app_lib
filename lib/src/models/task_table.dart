@@ -1,17 +1,19 @@
+import 'package:reqs_app_backend/src/mixins/descriptible.dart';
+import 'package:reqs_app_backend/src/mixins/indexable.dart';
 import 'package:reqs_app_backend/src/models/module.dart';
 import 'package:reqs_app_backend/src/models/risk.dart';
 import 'package:reqs_app_backend/src/models/task.dart';
-import 'package:uuid/uuid.dart';
 
 /// Represents a table of tasks with additional risks.
-class TaskTable {
-  String id;
-  String name;
+class TaskTable with Indexable, Descriptible {
   List<Task> tasks = [];
   List<Risk> risks = [];
   List<Module> modules = [];
 
-  TaskTable({required this.name}) : id = Uuid().v4();
+  TaskTable({required name, description = ""}) {
+    setName(name);
+    setDescription(description);
+  }
 
   void addTask(Task task) {
     tasks.add(task);

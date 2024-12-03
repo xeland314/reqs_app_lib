@@ -1,24 +1,20 @@
+import 'package:reqs_app_backend/src/mixins/descriptible.dart';
+import 'package:reqs_app_backend/src/mixins/indexable.dart';
+import 'package:reqs_app_backend/src/interfaces/jsonable.dart';
+import 'package:reqs_app_backend/src/mixins/orderable.dart';
+import 'package:reqs_app_backend/src/mixins/timestampable.dart';
 import 'package:reqs_app_backend/src/models/task.dart';
-import 'package:uuid/uuid.dart';
 
-class Module {
-  String id;
-  String title;
-  String description;
+class Module
+    with Indexable, Descriptible, Orderable, Timestampable
+    implements Jsonable {
   List<Task> tasks = [];
-  int _order;
 
-  Module({required this.title, required this.description})
-      : id = Uuid().v4(),
-        _order = 0; // Generate a unique UUID for each module
-
-  /// Sets the order of the module.
-  void setOrder(int order) {
-    _order = order;
+  Module({required name, required description}) {
+    setName(name);
+    setDescription(description);
   }
 
-  /// Gets the order of the module.
-  int get order => _order;
   void addTask(Task task) {
     tasks.add(task);
   }
@@ -38,18 +34,19 @@ class Module {
   int get hashCode => id.hashCode;
 
   /// Converts the task to a JSON map.
+  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'title': title,
+      'name': name,
       'description': description,
       'tasks': tasks.map((t) => t.toJson()).toList(),
-      'order': _order,
+      'order': order,
     };
   }
 
   @override
   String toString() {
-    return 'Module{id: $id, title: $title, description: $description, tasks: $tasks, order: $_order}';
+    return 'Module{id: $id, name: $name, description: $description, tasks: $tasks, order: $order}';
   }
 }
