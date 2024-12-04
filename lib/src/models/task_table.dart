@@ -1,11 +1,12 @@
 import 'package:reqs_app_backend/src/mixins/descriptible.dart';
 import 'package:reqs_app_backend/src/mixins/indexable.dart';
+import 'package:reqs_app_backend/src/mixins/timestampable.dart';
 import 'package:reqs_app_backend/src/models/module.dart';
 import 'package:reqs_app_backend/src/models/risk.dart';
 import 'package:reqs_app_backend/src/models/task.dart';
 
 /// Represents a table of tasks with additional risks.
-class TaskTable with Indexable, Descriptible {
+class TaskTable with Indexable, Descriptible, Timestampable {
   List<Task> tasks = [];
   List<Risk> risks = [];
   List<Module> modules = [];
