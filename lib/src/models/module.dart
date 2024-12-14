@@ -33,7 +33,7 @@ class Module
   @override
   int get hashCode => id.hashCode;
 
-  /// Converts the task to a JSON map.
+  /// Converts the module to a JSON map.
   @override
   Map<String, dynamic> toJson() {
     return {
@@ -48,5 +48,27 @@ class Module
   @override
   String toString() {
     return 'Module{id: $id, name: $name, description: $description, tasks: $tasks, order: $order}';
+  }
+
+  /// Converts the module to a map for database storage.
+  Map<String, Object?> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'tasks': tasks.map((task) => task.toMap()).toList(),
+      'order': order,
+    };
+  }
+
+  /// Creates a module from a map.
+  static Module fromMap(Map<String, dynamic> map) {
+    return Module(
+      name: map['name'],
+      description: map['description'],
+    )
+      ..tasks = List<Task>.from(map['tasks'].map((task) => Task.fromMap(task)))
+      ..setOrder(map['order'])
+      ..setID(map["id"]);
   }
 }

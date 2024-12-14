@@ -27,4 +27,26 @@ class Risk extends ExtraTask {
   String toString() {
     return 'Risk{id: $id, name: $name, description: $description, time: $extraTime, order: $order}';
   }
+
+  /// Converts the risk to a map for SQLite.
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'extraTime': extraTime.toString(),
+      'order': order,
+    };
+  }
+
+  /// Creates a risk from a map.
+  static Risk fromMap(Map<String, dynamic> map) {
+    return Risk(
+      name: map['name'],
+      description: map['description'],
+      extraTime: Time.fromString(map['extraTime']),
+    )
+      ..setOrder(map['order'])
+      ..setID(map["id"]);
+  }
 }

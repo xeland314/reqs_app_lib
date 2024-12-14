@@ -28,6 +28,30 @@ class TaskTable with Indexable, Descriptible, Timestampable {
     modules.add(module);
   }
 
+  Map<String, Object?> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      // Convert lists to JSON strings or other suitable formats
+      'tasks': tasks.map((task) => task.toMap()).toList(),
+      'risks': risks.map((risk) => risk.toMap()).toList(),
+      'modules': modules.map((module) => module.toMap()).toList(),
+    };
+  }
+
+  factory TaskTable.fromMap(Map<String, dynamic> map) {
+    return TaskTable(
+      name: map['name'],
+      description: map['description'],
+    )
+      ..setID(map["id"])
+      ..tasks = List<Task>.from(map['tasks'].map((task) => Task.fromMap(task)))
+      ..risks = List<Risk>.from(map['risks'].map((risk) => Risk.fromMap(risk)))
+      ..modules = List<Module>.from(
+          map['modules'].map((module) => Module.fromMap(module)));
+  }
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;

@@ -69,6 +69,22 @@ class Task
     };
   }
 
+  /// Creates a task from a map.
+  static Task fromMap(Map<String, dynamic> map) {
+    return Task(
+      name: map['name'],
+      description: map['description'],
+      optimisticTime: Time.fromString(map['optimisticTime']),
+      probableTime: Time.fromString(map['probableTime']),
+      pessimisticTime: Time.fromString(map['pessimisticTime']),
+      considerations: List<Consideration>.from(
+        map['considerations'].split('; ').map((c) => Consideration.fromJson(c)),
+      ),
+    )
+      ..setOrder(map['order'])
+      ..setID(map["id"]);
+  }
+
   @override
   String toString() {
     return 'Task{id: $id, name: $name, description: $description, optimisticTime: $optimisticTime, probableTime: $probableTime, pessimisticTime: $pessimisticTime, considerations: $considerations, order: $order}';
